@@ -1,0 +1,30 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/bole
+    docker:
+      - image: circleci/ruby:2.5.1-node-browsers
+    steps:
+      - checkout
+
+      - type: cache-restore
+        name: Restore bundle cache
+        key: initrax-bundle-{{ checksum "Gemfile.lock" }}
+
+      - run:
+          name: Bundle Install
+          command: bundle install --path vendor/bundle
+
+      - type: cache-save
+        name: Store bundle cache
+        key: initrax-bundle-{{ checksum "Gemfile.lock" }}
+        paths:
+          - vendor/bundle
+
+      - run:
+          name: Rubocop
+          command: bundle exec rubocop
+
+      - run:
+          name: Run Rspec specs
+          command: bundle exec rspec

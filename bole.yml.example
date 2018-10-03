@@ -1,0 +1,22 @@
+bole:
+  # (optional) If not specified, logging will go to whatever
+  # is passed to the constructor of the object, or STDOUT barring
+  # that. If you wish to use a File object, STDERR, or something
+  # like StringIO, then omit this value and pass it in the 
+  # constructor, or set @logger (which this class exposes).
+  file: /var/log/bole.log
+
+  # (required) One of: none, fatal, error, warn, info, or debug
+  level: info
+
+  # (optional) The reporting program name. Defaults to 'Bole'
+  progname: Bole
+
+  # (optional) will default to Ruby's default Logger formatter
+  # This is a string with these variables replaced. If you
+  # wish to override the datetime format, you can always set the
+  # value in code, e.g.:
+  #
+  #     bole = Bole::Manager.new(config_file)
+  #     bole.datetime_format = '%Y-%m-%d %H:%M:%S'
+  format: "[ {datetime} :: {severity} from {progname} ] {msg}"
